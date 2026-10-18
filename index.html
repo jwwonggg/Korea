@@ -1,0 +1,1055 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#F3F6FB" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#0E1424" media="(prefers-color-scheme:dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="釜山首爾七日">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<title>釜山首爾七日</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* Layout: 台夫特藍磁磚明信片。單欄、固定頂欄，磁磚角花當反覆出現的記號，
+   廣安大橋＋海雲台的 hero 放在瓷白頁面上；釜山橘當重點色，首爾金當第二色。 */
+:root{
+  --bg:#F3F6FB;        /* 瓷白，帶一點藍 */
+  --paper:#FFFFFF;
+  --ink:#14213D;       /* 台夫特墨藍 */
+  --ink-2:#56627E;
+  --line:#14213D;
+  --blue:#1F4FA3;      /* 台夫特鈷藍 */
+  --blue-2:#DCE6F6;
+  --orange:#EE7413;    /* 釜山橘 */
+  --gold:#E8B53E;      /* 列日鬆餅金 */
+  --red:#C8342B;       /* 韓國紅 */
+  --green:#2F7D5B;     /* 運河邊的樹 */
+  --soft:#E6ECF6;
+  --on-accent:#FFFFFF;
+  --on-gold:#14213D;
+  --shadow:0 4px 0 var(--blue);
+  --display:'LXGW WenKai TC','Noto Sans TC','PingFang TC','Microsoft JhengHei',serif;
+  --num:'Fraunces','Georgia',serif;
+  --body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --r:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1424; --paper:#18213A; --ink:#EEF2FA; --ink-2:#A9B4CC; --line:#C9D5EC;
+    --blue:#6E9BEA; --blue-2:#22325A; --soft:#223052; --shadow:0 4px 0 #050914;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1424; --paper:#18213A; --ink:#EEF2FA; --ink-2:#A9B4CC; --line:#C9D5EC;
+  --blue:#6E9BEA; --blue-2:#22325A; --soft:#223052; --shadow:0 4px 0 #050914;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;font-family:var(--display);font-weight:700;line-height:1.25;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px}
+
+/* 頂端固定選單 */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--paper);border-bottom:2px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.topbar .wrap{display:flex;align-items:center;gap:8px;height:56px;overflow-x:auto;scrollbar-width:none}
+.topbar .wrap::-webkit-scrollbar{display:none}
+.brand{font-family:var(--display);font-weight:700;font-size:21px;white-space:nowrap;padding-right:6px;color:var(--orange)}
+.brand b{color:var(--blue);font-weight:700}
+.topbar nav{display:flex;gap:6px;margin-left:auto}
+.topbar nav a{white-space:nowrap;text-decoration:none;font-size:14px;font-weight:700;padding:4px 11px;border:2px solid var(--line);border-radius:8px;background:var(--paper);transition:transform .15s,background .15s}
+.topbar nav a:hover,.topbar nav a:focus-visible{background:var(--blue);color:var(--on-accent);border-color:var(--blue);transform:translateY(-1px);outline:none}
+main{padding-top:calc(56px + env(safe-area-inset-top,0px))}
+section{padding-block:40px 8px;scroll-margin-top:60px}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.sec-head h2{font-size:28px}
+.sec-head .eyebrow{font-family:var(--num);font-size:12px;letter-spacing:.14em;color:var(--orange);font-weight:800;text-transform:uppercase}
+.sec-head svg{flex:none}
+.lead{margin-bottom:14px;font-size:14px;color:var(--ink-2);font-weight:700;max-width:62ch}
+
+/* 磁磚：四角小花，用在卡片上 */
+.tile{position:relative;background:var(--paper);border:2px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+
+/* 首頁 */
+.hero{padding-top:20px}
+.hero-card{background:var(--blue-2);border:2px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow);position:relative}
+.hero-art{display:block;width:100%;height:auto;max-width:100%}
+.hero-body{padding:14px 20px 22px;text-align:center;background:var(--paper);border-top:2px solid var(--line)}
+.h-title{font-family:var(--display);font-weight:700;font-size:clamp(40px,11vw,68px);line-height:1.1;color:var(--blue);letter-spacing:.04em}
+.h-title i{font-style:normal;color:var(--orange)}
+.h-sub{font-family:var(--num);font-weight:600;font-size:clamp(14px,3.6vw,18px);color:var(--ink-2);letter-spacing:.18em;text-transform:uppercase;margin-top:2px}
+.route{margin-top:14px;display:flex;justify-content:center;flex-wrap:wrap;gap:6px;align-items:center;font-weight:900;font-size:14px}
+.route span{border:2px solid var(--line);border-radius:8px;padding:2px 10px;background:var(--paper)}
+.route .bs{background:var(--orange);color:var(--on-accent);border-color:var(--orange)}
+.route .se{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+.route em{font-style:normal;color:var(--ink-2)}
+.countdown{margin-top:18px;display:flex;justify-content:center;gap:10px}
+.cd{background:var(--paper);border:2px solid var(--line);border-radius:12px;min-width:72px;padding:8px 6px 6px;box-shadow:var(--shadow)}
+.cd .n{font-family:var(--num);font-weight:800;font-size:38px;color:var(--orange);line-height:1;font-variant-numeric:tabular-nums lining-nums}
+.cd .l{font-size:12px;font-weight:700;color:var(--ink-2);letter-spacing:.1em}
+.cd-note{margin-top:10px;font-size:13px;color:var(--ink-2);font-weight:700}
+
+/* 航班卡片 */
+.pcard{overflow:hidden}
+.pcard-head{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;padding:12px 16px;border-bottom:2px solid var(--line)}
+.pcard-head h3{font-size:24px}
+.pcard-head .who{margin-left:auto}
+.leg{display:grid;grid-template-columns:1fr auto 1fr;gap:8px 10px;padding:14px 16px;align-items:center}
+.leg + .leg{border-top:2px dashed var(--line)}
+.leg .ap{font-family:var(--num);font-weight:800;font-size:30px;line-height:1}
+.leg .tm{font-family:var(--num);font-size:22px;font-weight:600;font-variant-numeric:tabular-nums lining-nums;line-height:1.1;margin-top:2px}
+.leg .tm sup{font-family:var(--body);font-size:11px;color:var(--red);font-weight:900;margin-left:2px}
+.leg .nm{font-size:12px;color:var(--ink-2);font-weight:700}
+.leg .to{text-align:right}
+.leg .mid{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:700;color:var(--ink-2);min-width:84px}
+.leg .mid .line{width:100%;border-top:3px dotted var(--line);margin:4px 0}
+.leg .meta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;font-size:12px;font-weight:700}
+.leg .meta span{background:var(--soft);border:2px solid var(--line);border-radius:8px;padding:1px 9px}
+.leg .meta .no{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+.leg .date{font-size:12px;color:var(--ink-2);font-weight:700;grid-column:1/-1;margin-bottom:-6px}
+.fnote{font-size:13px;color:var(--ink-2);font-weight:700;margin-top:12px}
+
+/* 標籤 */
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:900;padding:1px 8px;border-radius:7px;border:2px solid var(--line);line-height:1.5;white-space:nowrap}
+.tr-ktx{background:#1E4FA3;color:#FFFFFF;border-color:#1E4FA3}       /* Korail 藍 */
+.tr-arex{background:#2E8BC0;color:#FFFFFF;border-color:#2E8BC0}
+.tr-metro{background:var(--green);color:#FFFFFF;border-color:var(--green)}
+.tr-bus{background:#4B5563;color:#FFFFFF;border-color:#4B5563}
+.tr-taxi{background:#E8B53E;color:#14213D;border-color:#E8B53E}
+.tr-cable{background:#1B8A8F;color:#FFFFFF;border-color:#1B8A8F}
+.tr-train{background:#7A1E3A;color:#FFFFFF;border-color:#7A1E3A}
+.tr-walk{background:var(--paper);color:var(--ink)}
+.tr-plane{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.c-bs{background:var(--orange);color:var(--on-accent);border-color:var(--orange)}
+.c-se{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+.must{background:var(--red);color:#FFFFFF;border-color:var(--red)}
+.book{background:var(--paper);color:var(--red);border-color:var(--red)}
+
+/* 每日行程 */
+.daytabs{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 10px;margin:0 -2px 10px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.daytab{flex:0 0 auto;width:92px;scroll-snap-align:start;background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:7px 6px 9px;box-shadow:var(--shadow);text-align:center;transition:transform .15s,background .15s}
+.daytab .d{font-family:var(--num);font-weight:800;font-size:24px;color:var(--blue);line-height:1;font-variant-numeric:lining-nums}
+.daytab .w{font-family:var(--display);font-size:15px;color:var(--ink);margin-top:2px}
+.daytab .k{font-size:11px;font-weight:700;color:var(--ink-2);margin-top:3px;line-height:1.35}
+.daytab:hover{transform:translateY(-2px)}
+.daytab[aria-selected="true"]{background:var(--blue);border-color:var(--blue)}
+.daytab[aria-selected="true"] .d,.daytab[aria-selected="true"] .w,.daytab[aria-selected="true"] .k{color:var(--on-accent)}
+.daytab:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+@media (min-width:700px){ .daytabs{display:grid;grid-template-columns:repeat(7,1fr);overflow:visible} .daytab{width:auto} }
+.day-title{display:grid;gap:4px;margin-bottom:14px}
+.day-title .row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.day-title h3{font-size:26px}
+.day-title p{color:var(--ink-2);font-size:14px;font-weight:700;max-width:62ch}
+.tl{list-style:none;margin:0;padding:0 0 0 2px;position:relative}
+.tl::before{content:"";position:absolute;left:66px;top:6px;bottom:6px;border-left:3px dotted var(--blue);opacity:.55}
+.ev{display:grid;grid-template-columns:52px 1fr;gap:0 26px;padding:7px 0;position:relative;animation:rise .4s both}
+.ev .t{font-family:var(--num);font-size:16px;font-weight:600;font-variant-numeric:tabular-nums lining-nums;text-align:right;padding-top:12px;line-height:1}
+.ev .dot{position:absolute;left:60px;top:17px;width:15px;height:15px;transform:rotate(45deg);border:2px solid var(--line);background:var(--paper)}
+.ev.is-must .dot{background:var(--orange);border-color:var(--orange)}
+.ev .card{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:10px 14px 12px;min-width:0}
+.ev.is-must .card{box-shadow:var(--shadow)}
+.ev .tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px}
+.ev h4{font-size:19px;line-height:1.3}
+.ev p{font-size:14px;color:var(--ink-2);margin-top:4px}
+.ev .alt{margin-top:6px;font-size:13px;color:var(--ink);background:var(--soft);border-radius:8px;padding:4px 8px}
+.ev .alt b{color:var(--blue);font-weight:900}
+.ev .links{margin-top:6px;font-size:13px;font-weight:700}
+.ev .links a{color:var(--blue)}
+.split{display:flex;align-items:center;gap:10px;margin:14px 0 6px;font-family:var(--display);font-size:16px;color:var(--ink-2)}
+.split::before,.split::after{content:"";flex:1;border-top:2px dashed var(--line);opacity:.4}
+
+/* 待辦 */
+.todo{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.todo li{background:var(--paper);border:2px solid var(--line);border-radius:12px}
+.todo label{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;cursor:pointer}
+.todo input{appearance:none;flex:none;width:24px;height:24px;margin-top:2px;border:2px solid var(--line);border-radius:6px;background:var(--paper);display:grid;place-items:center;transition:background .15s}
+.todo input:checked{background:var(--green);border-color:var(--green)}
+.todo input:checked::after{content:"";width:7px;height:12px;border:solid #FFFFFF;border-width:0 3px 3px 0;transform:translateY(-2px) rotate(45deg)}
+.todo input:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+.todo .tx{font-weight:700;font-size:15px}
+.todo .tx .tag{margin-left:6px;vertical-align:1px}
+.todo .sub{display:block;font-weight:400;font-size:13px;color:var(--ink-2)}
+.todo input:checked ~ .tx{text-decoration:line-through;color:var(--ink-2)}
+.todo-foot{margin-top:10px;font-size:13px;color:var(--ink-2);font-weight:700;display:flex;justify-content:space-between;align-items:center}
+.todo-foot button{border:2px solid var(--line);background:var(--paper);border-radius:8px;padding:3px 10px;font-size:12px;font-weight:900}
+
+/* 住宿 */
+.stays{display:grid;gap:16px}
+.stay{overflow:hidden}
+.stay-art{background:var(--blue-2);border-bottom:2px solid var(--line);padding:10px 16px 0}
+.stay-art svg{display:block;width:100%;height:auto;max-width:100%}
+.stay-body{padding:14px 16px 16px}
+.stay-body h3{font-size:24px}
+.stay-body .en{font-size:13px;color:var(--ink-2);font-weight:700}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:12px 0 0;font-size:14px}
+.kv dt{font-weight:900;color:var(--ink-2);white-space:nowrap}
+.kv dd{margin:0;min-width:0}
+.tbd{color:var(--red);font-weight:900}
+
+/* 清單 */
+.places{display:flex;flex-wrap:wrap;gap:8px}
+.place{display:inline-flex;align-items:center;gap:6px;text-decoration:none;border:2px solid var(--line);border-radius:10px;padding:5px 12px;background:var(--paper);font-size:14px;font-weight:700;transition:transform .15s}
+.place:hover{transform:translateY(-2px);background:var(--gold);color:var(--on-gold)}
+.place .area{font-size:11px;color:var(--ink-2);font-weight:900}
+.place .note{font-size:11px;color:var(--ink-2);font-weight:700}
+.place:hover .area,.place:hover .note{color:var(--on-gold)}
+.eat-group{margin-bottom:18px}
+.eat-group h3{font-size:20px;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.opt-group{margin-bottom:16px}
+.opt-group h3{font-size:20px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.opt-group h3 .fit{font-family:var(--body);font-size:12px;font-weight:900;color:var(--ink-2);background:var(--soft);border-radius:8px;padding:1px 9px}
+footer{padding:40px 0 32px;text-align:center;color:var(--ink-2);font-size:13px;font-weight:700}
+
+/* 記帳 */
+[hidden]{display:none!important}
+.mtotal{overflow:hidden;margin-bottom:14px}
+.mt-main{padding:14px 16px 12px;display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 14px}
+.mt-main .lb{width:100%;font-size:12px;font-weight:900;color:var(--ink-2);letter-spacing:.08em}
+.mt-main .big{font-family:var(--num);font-weight:800;font-size:40px;line-height:1;color:var(--orange);font-variant-numeric:tabular-nums lining-nums}
+.mt-main .sm{font-size:15px;font-weight:700;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.mchips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.mchips button,.seg button{border:2px solid var(--line);background:var(--paper);border-radius:8px;padding:3px 11px;font-weight:900;font-size:13px}
+.mchips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.mform{padding:6px 14px 14px;margin-bottom:18px}
+.mrow{display:grid;grid-template-columns:52px 1fr;align-items:center;gap:10px;padding:8px 0;border-bottom:2px dashed var(--soft)}
+.mrow:last-of-type{border-bottom:0}
+.mrow > span{font-size:13px;font-weight:900;color:var(--ink-2)}
+.mrow input,.mrow select,.mset input{font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:8px;padding:7px 10px;width:100%;min-width:0}
+.mrow input:focus-visible,.mrow select:focus-visible,.mset input:focus-visible,.seg button:focus-visible,.mbtn:focus-visible,.mchips button:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+#m-amt{font-family:var(--num);font-size:22px;font-weight:800;font-variant-numeric:tabular-nums lining-nums}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button[aria-pressed="true"]{background:var(--blue);color:var(--on-accent);border-color:var(--blue)}
+.mbtn{display:block;width:100%;margin-top:12px;border:2px solid var(--line);background:var(--orange);color:var(--on-accent);border-radius:12px;padding:10px;font-weight:900;font-size:16px;box-shadow:var(--shadow)}
+.mbtn.ghost{background:var(--paper);color:var(--ink);box-shadow:none}
+.mbtn.warn{color:var(--red)}
+.mh{font-family:var(--display);font-size:20px;margin:6px 0 8px}
+.mbrk{display:grid;gap:8px;margin-bottom:18px}
+.mbrk .b{display:grid;grid-template-columns:44px 1fr auto;gap:8px;align-items:center;font-size:13px;font-weight:700}
+.mbrk .bar{height:12px;border:2px solid var(--line);border-radius:4px;background:var(--bg);overflow:hidden}
+.mbrk .bar i{display:block;height:100%}
+.mbrk .v{font-variant-numeric:tabular-nums}
+.mlist{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:8px}
+.mlist li{background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:8px 12px;display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center}
+.mlist .t{font-weight:900;font-size:15px;min-width:0;overflow-wrap:anywhere}
+.mlist .m{font-size:12px;color:var(--ink-2);font-weight:700;grid-column:1}
+.mlist .a{grid-row:1/3;grid-column:2;text-align:right;font-variant-numeric:tabular-nums}
+.mlist .a b{display:block;font-size:17px}
+.mlist .a small{color:var(--ink-2);font-weight:700}
+.mlist .del{grid-column:1/-1;justify-self:start;border:0;background:none;color:var(--ink-2);font-size:12px;font-weight:900;padding:2px 0;text-decoration:underline}
+.mlist .del.armed{color:var(--red)}
+.mlist .mempty{border:0;background:none;display:block;color:var(--ink-2);font-weight:700;padding:4px 0 10px}
+.mset{padding:12px 14px 14px;display:grid;gap:10px}
+.mset label{font-size:13px;font-weight:900;color:var(--ink-2)}
+.mset .rate{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:700}
+.mset .rate input{width:90px}
+.mset textarea{display:block;width:100%;min-height:0;height:0;padding:0;border:0;opacity:0;position:absolute;pointer-events:none}
+.mmsg{font-size:13px;font-weight:900;color:var(--green);min-height:1.2em}
+
+/* 動畫：風車慢慢轉、船輕輕晃 */
+.sails{transform-box:fill-box;transform-origin:center;animation:spin 16s linear infinite}
+.boat{animation:bob 4s ease-in-out infinite}
+.waves{animation:drift 6s linear infinite}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-40px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(2px)}}
+@keyframes rise{from{opacity:.001;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){
+  .sails,.boat,.waves,.ev{animation:none}
+  .topbar nav a,.daytab,.place{transition:none}
+}
+@media (min-width:640px){
+  .stays{grid-template-columns:1fr 1fr}
+  .tl::before{left:76px}
+  .ev{grid-template-columns:62px 1fr}
+  .ev .dot{left:70px}
+}
+@media (max-width:420px){
+  .leg .ap{font-size:25px}
+  .leg .tm{font-size:19px}
+  .cd{min-width:62px}
+  .cd .n{font-size:32px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">釜山首爾<b>七日</b></div>
+    <nav aria-label="頁面選單">
+      <a href="#home">首頁</a>
+      <a href="#flights">航班</a>
+      <a href="#days">行程</a>
+      <a href="#money">記帳</a>
+      <a href="#todo">清單</a>
+      <a href="#stay">住宿</a>
+      <a href="#eat">必吃</a>
+      <a href="#options">Plan B</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- 首頁 -->
+<section id="home" class="hero">
+  <div class="wrap">
+    <div class="hero-card">
+      <svg class="hero-art" viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="釜山廣安大橋、海雲台海灘與首爾南山塔插圖">
+        <rect width="360" height="180" fill="#DCE6F6"/>
+        <circle cx="300" cy="34" r="14" fill="#E8B53E"/>
+        <g fill="#FFFFFF" opacity=".9">
+          <ellipse cx="70" cy="30" rx="22" ry="7"/><ellipse cx="86" cy="25" rx="14" ry="7"/>
+          <ellipse cx="220" cy="22" rx="18" ry="6"/><ellipse cx="234" cy="18" rx="11" ry="6"/>
+        </g>
+        <!-- 遠山：南山 -->
+        <path d="M0 96 Q40 62 80 84 Q110 56 150 88 Q190 62 230 90 Q270 66 300 86 Q330 70 360 92 V120 H0Z" fill="#B9C9E8"/>
+        <!-- 南山塔 -->
+        <g stroke="#14213D" stroke-width="2" stroke-linejoin="round">
+          <rect x="296" y="56" width="10" height="22" fill="#FFFFFF"/>
+          <path d="M291 56 h20 l-3 -8 h-14Z" fill="#1F4FA3"/>
+          <path d="M300 48 V30" fill="none"/>
+          <circle cx="301" cy="30" r="2.5" fill="#C8342B"/>
+        </g>
+        <!-- 海 -->
+        <rect x="0" y="118" width="360" height="62" fill="#1F4FA3"/>
+        <g fill="none" stroke="#FFFFFF" stroke-width="2" opacity=".55" class="waves">
+          <path d="M-20 140 q10 -5 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0"/>
+          <path d="M-20 160 q10 -5 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0"/>
+        </g>
+        <!-- 廣安大橋 -->
+        <g stroke="#14213D" stroke-width="2.5" stroke-linejoin="round">
+          <rect x="0" y="108" width="360" height="8" fill="#FFFFFF"/>
+          <path d="M60 108 V72 M300 108 V72 M60 72 Q180 44 300 72" fill="none"/>
+          <path d="M60 72 L90 108 M60 72 L120 108 M60 72 L150 108 M300 72 L270 108 M300 72 L240 108 M300 72 L210 108" fill="none" stroke-width="1.5"/>
+          <rect x="56" y="64" width="8" height="46" fill="#C8342B"/><rect x="296" y="64" width="8" height="46" fill="#C8342B"/>
+        </g>
+        <!-- 海雲台沙灘＋陽傘 -->
+        <path d="M0 180 V150 Q60 134 120 150 Q180 166 230 150 V180Z" fill="#F2D9A6"/>
+        <g class="boat" stroke="#14213D" stroke-width="2" stroke-linejoin="round">
+          <path d="M40 162 h22 l-3 6 h-16Z" fill="#C8342B"/>
+          <path d="M51 162 V140" fill="none"/>
+          <path d="M51 140 L66 158 H51Z" fill="#FFFFFF"/>
+        </g>
+        <g stroke="#14213D" stroke-width="2" stroke-linejoin="round">
+          <path d="M150 158 V176" fill="none"/>
+          <path d="M136 158 q14 -12 28 0Z" fill="#EE7413"/>
+          <path d="M180 162 V176" fill="none"/>
+          <path d="M168 162 q12 -10 24 0Z" fill="#E8B53E"/>
+        </g>
+        <!-- 海鷗 -->
+        <g fill="none" stroke="#14213D" stroke-width="2" stroke-linecap="round">
+          <path d="M150 50 q5 -5 10 0 M160 50 q5 -5 10 0"/>
+          <path d="M190 40 q4 -4 8 0 M198 40 q4 -4 8 0"/>
+        </g>
+      </svg>
+      <div class="hero-body">
+        <div class="h-title">釜山<i>＋</i>首爾</div>
+        <div class="h-sub">5 people · 7 days in Korea</div>
+        <div class="route" aria-label="路線">
+          <span class="bs">海雲台</span><em>→</em><span class="bs">甘川 · 南浦</span><em>→</em><span class="bs">西面</span><em>→</em><span class="se">明洞 · 南山</span><em>→</em><span class="se">景福宮</span><em>→</em><span class="se">聖水 · 弘大</span>
+        </div>
+        <div class="countdown" id="countdown" aria-live="polite">
+          <div class="cd"><div class="n" id="cd-d">—</div><div class="l">日</div></div>
+          <div class="cd"><div class="n" id="cd-h">—</div><div class="l">時</div></div>
+          <div class="cd"><div class="n" id="cd-m">—</div><div class="l">分</div></div>
+        </div>
+        <p class="cd-note" id="cd-note">距離 1/5 07:40 起飛</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 航班 -->
+<section id="flights">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="6" fill="#DCE6F6" stroke="#14213D" stroke-width="2"/><path d="M7 24 L29 13 L33 15 L22 26 L24 33 L21 33 L17 28 L11 30 L9 28 L14 24Z" fill="#1F4FA3" stroke="#14213D" stroke-width="2" stroke-linejoin="round"/></svg>
+      <div><div class="eyebrow">Flights</div><h2>去回程</h2></div>
+    </div>
+    <article class="pcard tile">
+      <div class="pcard-head">
+        <h3>Jw · Enoch · Stella</h3>
+        <span class="tag tr-plane">中華航空</span>
+        <span class="who tag c-bs">台北 → 釜山 · 首爾 → 台北</span>
+      </div>
+      <div class="leg">
+        <div class="date">1/5 二 · 去程 · 已確認</div>
+        <div><div class="ap">TPE</div><div class="tm">07:40</div><div class="nm">桃園</div></div>
+        <div class="mid"><span>2h 10m</span><div class="line"></div><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 13 L16 6 L19 7 L12 14 L13 18 L11 18 L9 15 L5 16 L4 15 L7 13Z" fill="currentColor"/></svg></div>
+        <div class="to"><div class="ap">PUS</div><div class="tm">10:50</div><div class="nm">金海 1/5 二</div></div>
+        <div class="meta"><span class="no">CI 188</span><span>直飛</span><span>經濟艙 基本 (N)</span></div>
+      </div>
+      <div class="leg">
+        <div class="date">1/11 一 · 回程 · 已確認</div>
+        <div><div class="ap">ICN</div><div class="tm">20:15</div><div class="nm">仁川</div></div>
+        <div class="mid"><span>3h 0m</span><div class="line"></div><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 13 L16 6 L19 7 L12 14 L13 18 L11 18 L9 15 L5 16 L4 15 L7 13Z" fill="currentColor"/></svg></div>
+        <div class="to"><div class="ap">TPE</div><div class="tm">22:15</div><div class="nm">桃園 1/11 一</div></div>
+        <div class="meta"><span class="no">CI 163</span><span>直飛</span><span>經濟艙 基本 (N)</span></div>
+      </div>
+    </article>
+    <article class="pcard tile">
+      <div class="pcard-head">
+        <h3>Quinn</h3>
+        <span class="tag tr-plane">待填</span>
+        <span class="who tag c-bs">台北 → 釜山 · 首爾 → 台北</span>
+      </div>
+      <div class="leg">
+        <div class="date">1/5 二 · 去程 · <span class="tbd">待填</span></div>
+        <div><div class="ap">TPE</div><div class="tm">--:--</div><div class="nm">桃園</div></div>
+        <div class="mid"><span>—</span><div class="line"></div><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 13 L16 6 L19 7 L12 14 L13 18 L11 18 L9 15 L5 16 L4 15 L7 13Z" fill="currentColor"/></svg></div>
+        <div class="to"><div class="ap">PUS</div><div class="tm">--:--</div><div class="nm">金海</div></div>
+        <div class="meta"><span class="no">班號 待填</span></div>
+      </div>
+      <div class="leg">
+        <div class="date">1/11 一 · 回程 · <span class="tbd">待填</span></div>
+        <div><div class="ap">ICN</div><div class="tm">--:--</div><div class="nm">仁川</div></div>
+        <div class="mid"><span>—</span><div class="line"></div><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 13 L16 6 L19 7 L12 14 L13 18 L11 18 L9 15 L5 16 L4 15 L7 13Z" fill="currentColor"/></svg></div>
+        <div class="to"><div class="ap">TPE</div><div class="tm">--:--</div><div class="nm">桃園</div></div>
+        <div class="meta"><span class="no">班號 待填</span></div>
+      </div>
+    </article>
+    <article class="pcard tile">
+      <div class="pcard-head">
+        <h3>Catherine</h3>
+        <span class="tag tr-plane">中華航空</span>
+        <span class="who tag c-se">只跟首爾段 · 台北 ⇄ 首爾</span>
+      </div>
+      <div class="leg">
+        <div class="date">1/8 五 · 去程 · 已確認</div>
+        <div><div class="ap">TPE</div><div class="tm">07:50</div><div class="nm">桃園</div></div>
+        <div class="mid"><span>2h 30m</span><div class="line"></div><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 13 L16 6 L19 7 L12 14 L13 18 L11 18 L9 15 L5 16 L4 15 L7 13Z" fill="currentColor"/></svg></div>
+        <div class="to"><div class="ap">ICN</div><div class="tm">11:20</div><div class="nm">仁川 1/8 五</div></div>
+        <div class="meta"><span class="no">CI 160</span><span>直飛</span><span>經濟艙 基本 (H)</span></div>
+      </div>
+      <div class="leg">
+        <div class="date">1/11 一 · 回程 · 已確認</div>
+        <div><div class="ap">ICN</div><div class="tm">20:15</div><div class="nm">仁川</div></div>
+        <div class="mid"><span>3h 0m</span><div class="line"></div><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 13 L16 6 L19 7 L12 14 L13 18 L11 18 L9 15 L5 16 L4 15 L7 13Z" fill="currentColor"/></svg></div>
+        <div class="to"><div class="ap">TPE</div><div class="tm">22:15</div><div class="nm">桃園 1/11 一</div></div>
+        <div class="meta"><span class="no">CI 163</span><span>直飛</span><span>經濟艙 基本 (N)</span></div>
+      </div>
+    </article>
+    <p class="fnote">三個人的票價 TWD 12,743 一人；Quinn 的班機還沒填。Catherine 1/8 中午到仁川，入境後坐 AREX 直達，約 12:30 到首爾站，和 11:53 坐 KTX 到的四個人在站內會合。1/8（五）早上 KTX 釜山 → 首爾約 2 小時半，₩54,400 一人。韓國比台灣快 1 小時，手機會自動改。</p>
+  </div>
+</section>
+
+<!-- 每日行程 -->
+<section id="days">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="6" fill="#DCE6F6" stroke="#14213D" stroke-width="2"/><path d="M14 33 L17 16 L23 16 L26 33Z" fill="#9C3B2E" stroke="#14213D" stroke-width="2" stroke-linejoin="round"/><g stroke="#14213D" stroke-width="2" fill="#FFFFFF"><rect x="18.5" y="4" width="3" height="11"/><rect x="18.5" y="17" width="3" height="11"/><rect x="8" y="14.5" width="11" height="3"/><rect x="21" y="14.5" width="11" height="3"/></g><circle cx="20" cy="16" r="2" fill="#14213D"/></svg>
+      <div><div class="eyebrow">Itinerary</div><h2>每日行程</h2></div>
+    </div>
+    <p class="lead">釜山 3 晚住海雲台（Jw、Enoch、Stella、Quinn），首爾 3 晚住明洞（Catherine 1/8 加入）。冬天 17:30 就天黑，戶外排白天、晚上看燈飾；晚餐烤肉店都先訂位。</p>
+    <div class="daytabs" role="tablist" aria-label="選擇日期" id="daytabs"></div>
+    <div id="daypanel" role="tabpanel"></div>
+  </div>
+</section>
+
+<!-- 待辦清單 -->
+<section id="todo">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="6" fill="#DCE6F6" stroke="#14213D" stroke-width="2"/><path d="M20 30 C13 26 10 20 12 13 C15 16 17 18 20 19 C23 18 25 16 28 13 C30 20 27 26 20 30Z" fill="#EE7413" stroke="#14213D" stroke-width="2" stroke-linejoin="round"/><path d="M20 30 V36" stroke="#2F7D5B" stroke-width="2.5"/></svg>
+      <div><div class="eyebrow">Checklist</div><h2>出發前打勾</h2></div>
+    </div>
+    <ul class="todo" id="todolist"></ul>
+    <div class="todo-foot"><span id="todo-count">0 / 0 完成</span><button type="button" id="todo-reset">全部清除</button></div>
+  </div>
+</section>
+
+<!-- 記帳 -->
+<section id="money">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="6" fill="#DCE6F6" stroke="#14213D" stroke-width="2"/><circle cx="20" cy="20" r="11" fill="#E8B53E" stroke="#14213D" stroke-width="2"/><text x="20" y="25" font-size="14" font-weight="800" text-anchor="middle" fill="#14213D" font-family="Fraunces, Georgia, serif">₩</text></svg>
+      <div><div class="eyebrow">Expenses</div><h2>記帳</h2></div>
+    </div>
+    <p class="lead">只存在這支手機。韓元、台幣都能記，自動換算。</p>
+
+    <div class="mtotal tile" aria-live="polite">
+      <div class="mt-main">
+        <div class="lb" id="m-lb">全部支出</div>
+        <div class="big" id="m-eur">₩0</div>
+        <div class="sm" id="m-twd">NT$0</div>
+      </div>
+    </div>
+
+    <div class="mchips" id="m-days" role="group" aria-label="篩選日期"></div>
+
+    <form class="mform tile" id="m-form" autocomplete="off">
+      <div class="mrow"><span>金額</span><input id="m-amt" type="number" inputmode="decimal" step="1" min="0" placeholder="0" required></div>
+      <div class="mrow"><span>幣別</span><div class="seg" data-f="c"><button type="button" data-v="KRW" aria-pressed="true">₩ 韓元</button><button type="button" data-v="TWD" aria-pressed="false">NT$</button></div></div>
+      <div class="mrow"><span>付款</span><div class="seg" data-f="pm"><button type="button" data-v="cash" aria-pressed="true">現金</button><button type="button" data-v="card" aria-pressed="false">刷卡</button></div></div>
+      <div class="mrow"><span>分類</span><select id="m-cat"></select></div>
+      <div class="mrow"><span>日期</span><select id="m-day"></select></div>
+      <div class="mrow"><span>備註</span><input id="m-note" type="text" placeholder="例：豬肉湯飯"></div>
+      <button class="mbtn" type="submit">記一筆</button>
+    </form>
+
+    <div id="m-brk-wrap" hidden>
+      <h3 class="mh">分類</h3>
+      <div class="mbrk" id="m-brk"></div>
+    </div>
+
+    <h3 class="mh">明細</h3>
+    <ul class="mlist" id="m-list"></ul>
+
+    <h3 class="mh">設定</h3>
+    <div class="mset tile">
+      <div class="rate"><label for="m-rate">匯率</label>1 台幣 = <input id="m-rate" type="number" inputmode="decimal" step="0.1" min="0"> 韓元</div>
+      <textarea id="m-copy" aria-hidden="true" tabindex="-1"></textarea>
+      <button class="mbtn ghost" type="button" id="m-tsv">複製成表格</button>
+      <button class="mbtn ghost warn" type="button" id="m-clear">清空所有記帳</button>
+      <p class="mmsg" id="m-msg" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 住宿 -->
+<section id="stay">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="6" fill="#DCE6F6" stroke="#14213D" stroke-width="2"/><path d="M11 34 V16 h3 v-4 h3 v-4 h6 v4 h3 v4 h3 V34Z" fill="#1F4FA3" stroke="#14213D" stroke-width="2" stroke-linejoin="round"/><rect x="17" y="26" width="6" height="8" fill="#EE7413" stroke="#14213D" stroke-width="1.5"/><g fill="#FFFFFF"><rect x="14" y="18" width="4" height="4"/><rect x="22" y="18" width="4" height="4"/></g></svg>
+      <div><div class="eyebrow">Stay</div><h2>住宿</h2></div>
+    </div>
+    <div class="stays">
+      <article class="stay tile">
+        <div class="stay-art">
+          <svg viewBox="0 0 300 100" aria-hidden="true">
+            <rect x="0" y="70" width="300" height="30" fill="#1F4FA3"/>
+            <path d="M0 100 V84 Q80 72 160 86 Q230 96 300 84 V100Z" fill="#F2D9A6"/>
+            <g stroke="#14213D" stroke-width="2.2" stroke-linejoin="round">
+              <path d="M40 70 V26 h26 V70Z" fill="#FFFFFF"/>
+              <path d="M74 70 V14 h22 V70Z" fill="#1F4FA3"/>
+              <path d="M104 70 V34 h30 V70Z" fill="#E8B53E"/>
+              <path d="M180 70 V40 h20 V70Z" fill="#C8342B"/>
+            </g>
+            <g fill="#14213D"><rect x="46" y="32" width="5" height="6"/><rect x="55" y="32" width="5" height="6"/><rect x="46" y="44" width="5" height="6"/><rect x="55" y="44" width="5" height="6"/><rect x="79" y="20" width="4" height="6" fill="#FFFFFF"/><rect x="88" y="20" width="4" height="6" fill="#FFFFFF"/><rect x="79" y="32" width="4" height="6" fill="#FFFFFF"/><rect x="88" y="32" width="4" height="6" fill="#FFFFFF"/><rect x="110" y="40" width="5" height="6"/><rect x="120" y="40" width="5" height="6"/></g>
+            <g fill="none" stroke="#FFFFFF" stroke-width="2" opacity=".6"><path d="M200 82 q8 -4 16 0 t16 0 t16 0 t16 0 t16 0"/></g>
+            <g stroke="#14213D" stroke-width="2" stroke-linejoin="round"><path d="M250 62 V86" fill="none"/><path d="M238 62 q12 -10 24 0Z" fill="#EE7413"/></g>
+          </svg>
+        </div>
+        <div class="stay-body">
+          <h3>釜山 三晚</h3>
+          <div class="en">Haeundae · 1/5 四 入住，1/8 日 退房</div>
+          <dl class="kv">
+            <dt>狀態</dt><dd class="tbd">還沒訂</dd>
+            <dt>區域</dt><dd>海雲台海灘附近，地鐵海雲台站走 10 分內。三天有兩天在東邊，晚上光之祭就在旁邊</dd>
+            <dt>機場</dt><dd>機場巴士 1 號線直達 ₩9,500 一人，約每小時一班；計程車約 ₩35,000</dd>
+            <dt>退房</dt><dd>1/8 早上叫兩台計程車或一台大型車到釜山站約 30 分，趕 09:26 KTX</dd>
+          </dl>
+        </div>
+      </article>
+      <article class="stay tile">
+        <div class="stay-art">
+          <svg viewBox="0 0 300 100" aria-hidden="true">
+            <path d="M0 70 Q60 40 120 62 Q180 36 240 60 Q270 48 300 62 V100 H0Z" fill="#B9C9E8"/>
+            <g stroke="#14213D" stroke-width="2.2" stroke-linejoin="round">
+              <rect x="176" y="34" width="10" height="20" fill="#FFFFFF"/>
+              <path d="M171 34 h20 l-3 -8 h-14Z" fill="#1F4FA3"/>
+              <path d="M181 26 V10" fill="none"/>
+            </g>
+            <circle cx="181" cy="10" r="2.5" fill="#C8342B"/>
+            <g stroke="#14213D" stroke-width="2.2" stroke-linejoin="round">
+              <path d="M40 100 V56 l12 -8 l12 8 V100Z" fill="#9C3B2E"/>
+              <path d="M30 58 l22 -16 l22 16Z" fill="#14213D"/>
+              <path d="M76 100 V44 h20 V100Z" fill="#E8B53E"/>
+              <path d="M104 100 V60 h24 V100Z" fill="#C8342B"/>
+            </g>
+            <g fill="#FFFFFF"><rect x="81" y="50" width="4" height="6"/><rect x="89" y="50" width="4" height="6"/><rect x="81" y="64" width="4" height="6"/><rect x="89" y="64" width="4" height="6"/><rect x="110" y="68" width="5" height="6"/><rect x="118" y="68" width="5" height="6"/></g>
+            <rect x="46" y="80" width="12" height="20" fill="#EE7413" stroke="#14213D" stroke-width="2"/>
+            <rect x="0" y="92" width="300" height="8" fill="#56627E"/>
+          </svg>
+        </div>
+        <div class="stay-body">
+          <h3>首爾 三晚</h3>
+          <div class="en">Myeongdong · 1/8 日 入住，1/11 三 退房</div>
+          <dl class="kv">
+            <dt>狀態</dt><dd class="tbd">還沒訂</dd>
+            <dt>區域</dt><dd>明洞，4 號線明洞站或 2 號線乙支路入口站附近。景福宮、南山、清溪川燈節都近，換錢所最好。五個人可以訂一間大房加一間，或兩間</dd>
+            <dt>到機場</dt><dd>明洞路邊機場巴士 6015 直達 ₩17,000；或 4 號線到首爾站轉 AREX 直達</dd>
+            <dt>退房</dt><dd>1/11 退房寄放行李，16:00 回來拿，趕 20:15 CI163</dd>
+          </dl>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 必吃 -->
+<section id="eat">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="6" fill="#DCE6F6" stroke="#14213D" stroke-width="2"/><rect x="9" y="10" width="22" height="20" rx="3" fill="#E8B53E" stroke="#14213D" stroke-width="2"/><path d="M9 17 h22 M9 23 h22 M16 10 v20 M24 10 v20" stroke="#14213D" stroke-width="1.6"/></svg>
+      <div><div class="eyebrow">Must eat</div><h2>必吃清單</h2></div>
+    </div>
+    <p class="lead">行程裡已經排進去的店。點了直接開 Google Maps。</p>
+    <div id="eat-list"></div>
+    <p class="lead" style="margin-top:4px">營業時間以網路資料整理，出發前用 Google Maps 再確認。</p>
+  </div>
+</section>
+
+<!-- Plan B -->
+<section id="options">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="6" fill="#DCE6F6" stroke="#14213D" stroke-width="2"/><path d="M12 30 L20 8 L28 30 L20 25Z" fill="#1F4FA3" stroke="#14213D" stroke-width="2" stroke-linejoin="round"/></svg>
+      <div><div class="eyebrow">Plan B</div><h2>Plan B 口袋名單</h2></div>
+    </div>
+    <p class="lead">下雨、累了或時間多出來時的替代，依城市分組。</p>
+    <div id="options-list"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>2027.1.5 – 1.11 · Jw · Quinn · Enoch · Stella · Catherine</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var TR = {
+    plane:['飛機','tr-plane'], ktx:['KTX','tr-ktx'], arex:['AREX','tr-arex'], metro:['地鐵','tr-metro'],
+    bus:['公車','tr-bus'], taxi:['計程車','tr-taxi'], cable:['纜車','tr-cable'], train:['海岸列車','tr-train'], walk:['步行','tr-walk']
+  };
+  var M = 'https://www.google.com/maps/search/?api=1&query=';
+  function map(q){ return M + encodeURIComponent(q); }
+
+  var DAYS = [
+    {
+      d:'1/5', w:'二', c:'bs', k:'抵達 · 海雲台',
+      title:'台北 → 釜山 · 海雲台',
+      note:'10:50 落地，中午到海雲台放行李、吃湯飯，下午海邊和冬柏島散步，天黑後看海雲台光之祭，晚上吃烤肉。今天是第一個週二，札嘎其市場公休，西邊留到 1/7。',
+      items:[
+        {t:'05:30', tr:'taxi', name:'到桃園機場', p:'07:40 起飛，05:30 前到第二航廈（華航）報到。釜山段四個人，Catherine 1/8 直接飛首爾。'},
+        {t:'07:40', tr:'plane', must:true, name:'CI188 桃園 → 金海', p:'飛 2 小時 10 分，韓國時間 10:50 落地（韓國比台灣快 1 小時）。'},
+        {t:'11:30', tr:'walk', name:'入境、買 T-money', p:'入境大廳便利商店買 T-money（約 ₩2,500–5,000），用現金儲值 ₩30,000，釜山首爾都能用。'},
+        {t:'12:00', tr:'bus', name:'金海機場 → 海雲台', p:'機場巴士 1 號線「海雲台」方向 ₩9,500 一人，約每小時一班，1 樓入境大廳外售票處先用現金買票，車上不收現金。', alt:'剛錯過巴士：四個人加行李叫兩台計程車（各約 ₩35,000），或用 Kakao T 叫大型車。'},
+        {t:'13:15', tr:'walk', name:'飯店放行李', p:'海雲台的飯店還沒定。還沒到入住時間就先寄放。'},
+        {t:'13:30', tr:'walk', must:true, name:'豬肉湯飯 午餐', p:'밀양순대돼지국밥 海雲台店，約 ₩10,000。蔥放在桌上自己加，不加就好。', q:'밀양순대돼지국밥 해운대'},
+        {t:'14:30', tr:'walk', must:true, name:'海雲台海灘 → 冬柏島', p:'沿海灘往西走到冬柏島海岸步道，繞到 Nurimaru APEC House（免費），慢慢走約 1 小時。一月海風很冷，帽子手套戴上。', q:'동백섬 Dongbaekseom Haeundae'},
+        {t:'16:00', tr:'walk', name:'飯店 check-in 休息', p:'回去暖一下，日落 17:27。'},
+        {t:'17:45', tr:'walk', must:true, name:'海雲台光之祭', p:'海雲台海灘和九南路一整排燈飾，18:00–23:00。去年辦到 1/18，今年日期還沒公布，出發前查「해운대 빛축제」。', q:'해운대 빛축제', alt:'沒辦：海雲台市場逛一圈，고래사어묵 魚板 ₩2,000–5,000。'},
+        {t:'18:30', tr:'walk', must:true, book:true, name:'烤肉 晚餐', p:'엄용백돼지구이집 烤豬肉，有團體座位；或 해운대암소갈비집 烤牛排骨（偏貴，約 ₩40,000 起一人）。韓國烤肉店通常每人至少點一份，先訂位。', q:'엄용백돼지구이집 해운대', alt:'맛찬들왕소금구이 海雲台店，鹽烤豬肉，比較好訂。'}
+      ]
+    },
+    {
+      d:'1/6', w:'三', c:'bs', k:'龍宮寺 · 藍線公園',
+      title:'海東龍宮寺 → 青沙浦 → 藍線公園',
+      note:'冬天 17:27 就天黑，整天往前排：早上龍宮寺，中午青沙浦烤貝，下午坐天空膠囊回尾浦。晚上太冷就去新世界 Spa Land 泡湯。',
+      items:[
+        {t:'09:00', tr:'bus', name:'海雲台 → 海東龍宮寺', p:'海雲台站附近搭 181 號公車到「용궁사·국립수산과학원」站，約 40 分，再走 10 分。四個人坐一台計程車約 ₩12,000 更快。', q:'해동용궁사'},
+        {t:'09:45', tr:'walk', must:true, name:'海東龍宮寺', p:'蓋在海邊岩石上的寺，免費，04:30–20:30。新年剛過還有人來祈福，拍照為主，待 1 小時。', q:'Haedong Yonggungsa Temple'},
+        {t:'11:15', tr:'taxi', name:'到青沙浦', p:'計程車約 ₩10,000，或 181 號往回坐。'},
+        {t:'11:30', tr:'walk', must:true, name:'青沙浦 烤貝 午餐', p:'烤貝街隨便挑一家，烤貝、烤蝦、烤扇貝自己烤，不用碰菜。四個人點一大盤約 ₩60,000–80,000。', q:'청사포 조개구이'},
+        {t:'13:30', tr:'cable', must:true, book:true, name:'藍線公園 天空膠囊 青沙浦 → 尾浦', p:'一車最多 4 人，四個人剛好一車，單程 ₩30,000 一車。冬季約 08:30–18:00。要先上 bluelinepark.com 預約，每月 1 號開放下個月，12/1 要搶 1/6。中途「다릿돌전망대」站可下車走橋石天空步道。15:30 以後逆光又冷，早點坐。', q:'해운대 블루라인파크 청사포정거장', alt:'膠囊沒搶到：坐海岸列車（約 ₩8,000–10,000 一人，09:00–19:00），現場買。'},
+        {t:'15:00', tr:'walk', name:'尾浦 → 海雲台', p:'尾浦站走回海雲台約 15–20 分。'},
+        {t:'16:00', tr:'metro', name:'新世界 Spa Land 泡湯（可選）', p:'2 號線 2 站到 Centum City，新世界百貨裡面。溫泉加汗蒸幕，冬天最舒服，09:00–22:00，票價約 ₩20,000 上下（出發前看官網）。', q:'신세계 스파랜드 센텀시티', alt:'不想泡：Busan X the SKY 海雲台 100 樓觀景台，₩27,000，10:00–21:00，看夜景。'},
+        {t:'19:00', tr:'metro', must:true, name:'西面 湯飯街 晚餐', p:'Centum City 坐 2 號線到西面約 20 分，1 號出口就是豬肉湯飯街。송정3대국밥 1946 年開的，湯不鹹，約 ₩10,000–12,000。', q:'송정3대국밥 서면', alt:'想吃烤肉：西面 맛찬들 서면점 鹽烤豬肉，先訂位。'},
+        {t:'20:30', tr:'walk', name:'西面逛街、換錢', p:'西面換錢所匯率比海雲台好。逛完 2 號線回海雲台約 30 分。', q:'서면 환전소'}
+      ]
+    },
+    {
+      d:'1/7', w:'四', c:'bs', k:'甘川 · 南浦 · 札嘎其',
+      title:'甘川文化村 → 札嘎其市場 → 南浦洞',
+      note:'西邊一日：甘川 17:00 就關，早上先去；中午札嘎其（今天有開），下午 BIFF 廣場或松島纜車，天黑後看光復路燈飾。',
+      items:[
+        {t:'09:00', tr:'metro', name:'海雲台 → 土城站', p:'2 號線到西面轉 1 號線到土城站，約 50 分。6 號出口轉社區巴士 사하 1-1 或 서구 2、2-2 到「감천문화마을」站，10–15 分。', alt:'四個人坐計程車從海雲台直接到甘川約 ₩25,000，40 分。'},
+        {t:'10:00', tr:'walk', must:true, name:'甘川文化村', p:'免費，冬季 09:00–17:00，遊客中心買地圖蓋章本 ₩2,000。是居民區，坡多，拍照為主，待 1.5 小時。', q:'감천문화마을'},
+        {t:'12:00', tr:'taxi', must:true, name:'札嘎其市場 午餐', p:'村口計程車到札嘎其約 ₩8,000–12,000。1 樓挑魚、2 樓代煮，點烤魚、烤蝦、烤鰻都不用吃菜。一月是機張雪蟹季。', q:'자갈치시장', alt:'不想吃海鮮：南浦洞 일미밀면 密麵，說「파 빼주세요」不要蔥。'},
+        {t:'13:30', tr:'walk', name:'BIFF 廣場 · 國際市場', p:'BIFF 廣場的 씨앗호떡 堅果糖餅 ₩2,000 一個，冬天吃熱的剛好。國際市場 09:00–20:00。', q:'BIFF 광장'},
+        {t:'14:15', tr:'walk', name:'南浦洞換錢', p:'Money Box 南浦店，札嘎其站 7 號出口，釜山匯率最好的一帶。', q:'머니박스 남포점'},
+        {t:'14:45', tr:'taxi', name:'松島海上纜車', p:'計程車約 15 分。冬季 09:00–20:00，一般車廂來回 ₩19,000。風大會停駛。', q:'부산에어크루즈 송도해상케이블카', alt:'太冷或停駛：影島 國立海洋博物館，免費、室內，週一休。'},
+        {t:'17:00', tr:'taxi', name:'回南浦洞', p:'計程車約 15 分。日落 17:27。'},
+        {t:'17:30', tr:'walk', name:'光復路 聖誕燈樹', p:'光復路一整條街的燈飾，去年辦到 2/22，今年日期出發前查「광복로 트리축제」。', q:'광복로 트리축제'},
+        {t:'18:30', tr:'walk', name:'南浦洞 晚餐', p:'南浦洞巷子裡找烤肉或湯飯，或回西面吃。吃完 1 號線轉 2 號線回海雲台約 50 分，記得今晚整理行李。'}
+      ]
+    },
+    {
+      d:'1/8', w:'五', c:'se', k:'KTX · 明洞 · 南山',
+      title:'釜山 → 首爾 · 明洞、南山、燈節',
+      note:'早上坐 KTX 去首爾，中午在首爾站接 Catherine，五個人到明洞放行李、換錢，傍晚坐纜車上南山看日落，晚上清溪川首爾燈節。',
+      items:[
+        {t:'07:30', tr:'walk', name:'退房', p:'前一晚先把行李整理好。'},
+        {t:'07:45', tr:'taxi', name:'海雲台 → 釜山站', p:'四個人加行李叫兩台計程車，或用 Kakao T 叫大型車（벤티），約 30 分、一台 ₩20,000 上下。KTX 月台在地面層，提早 20 分到。'},
+        {t:'09:26', tr:'ktx', must:true, book:true, name:'KTX 24 釜山 → 首爾', p:'09:26 → 11:53，約 2 小時半。2026/9 起一般室降到 ₩54,400 一人。用 Korail+ app（原 Korail Talk）一次訂四個人，開車前一個月開放。', q:'부산역', alt:'早一班：KTX 20 08:50 → 11:28。'},
+        {t:'11:53', tr:'walk', name:'抵達首爾站', p:'先在站內咖啡店坐著等 Catherine，順便買首爾用的零食飲料。'},
+        {t:'12:30', tr:'walk', must:true, name:'首爾站 和 Catherine 會合', p:'Catherine CI160 11:20 到仁川，入境領行李再坐 AREX 直達（43 分），約 12:30 到首爾站。在首爾站 AREX 出口會合，用訊息報位置。'},
+        {t:'12:45', tr:'taxi', name:'首爾站 → 明洞 放行李', p:'五個人一般計程車坐不下（最多 4 人），分兩台，約 10 分；或 4 號線 2 站到明洞站。'},
+        {t:'13:15', tr:'walk', must:true, name:'明洞 午餐', p:'명동교자 刀削麵很有名但湯有蔥蒜，怕蔥就點餃子；或깐부치킨 炸雞（約 ₩20,000 一隻）。', q:'깐부치킨 명동점'},
+        {t:'14:00', tr:'walk', must:true, name:'明洞換錢、逛街', p:'明洞換錢所是全韓國匯率最好的。逛藥妝、衣服。', q:'명동 환전소'},
+        {t:'15:30', tr:'walk', name:'飯店 check-in 休息', p:'回去加衣服，晚上首爾會到零下。'},
+        {t:'16:45', tr:'cable', must:true, name:'南山纜車 → N 首爾塔', p:'明洞站 3 號出口走 10–15 分到纜車站，來回 ₩15,000。塔下平台免費看夜景，觀景台另外買票可不上。日落 17:31，剛好從白天看到夜景。', q:'남산케이블카'},
+        {t:'18:45', tr:'walk', must:true, book:true, name:'明洞 烤肉 晚餐', p:'두껍삼 명동직영점 厚切五花肉，Naver 可以訂位，五個人先點五份。', q:'두껍삼 명동직영점', alt:'육통령、청년고기장수 也都在明洞。'},
+        {t:'20:15', tr:'walk', must:true, name:'清溪川 首爾燈節', p:'明洞走 15 分到清溪川起點。去年 12/12–1/18 每天 18:00–22:00，今年日期還沒公布，出發前查「서울빛초롱축제」。', q:'청계천 서울빛초롱축제'}
+      ]
+    },
+    {
+      d:'1/9', w:'六', c:'se', k:'景福宮 · 北村 · 溜冰',
+      title:'景福宮 → 三清洞 → 北村 → 益善洞 → 首爾廣場溜冰',
+      note:'宮殿、韓屋一路走，下午益善洞喝咖啡暖身，晚上首爾廣場溜冰（週六開到 23:00）。',
+      items:[
+        {t:'09:40', tr:'metro', name:'明洞 → 景福宮站', p:'4 號線到忠武路轉 3 號線到景福宮站 5 號出口，約 20 分。'},
+        {t:'10:00', tr:'walk', must:true, name:'景福宮 · 守門將交接', p:'10:00 和 14:00 有守門將交接。冬季 09:00–17:00，最後入場 16:00，門票 ₩3,000（穿韓服免費，但一月穿韓服很冷）。慢慢走 1.5 小時。', q:'경복궁'},
+        {t:'12:00', tr:'walk', must:true, name:'蔘雞湯 午餐', p:'토속촌 삼계탕，景福宮站 2 號出口走 5 分，約 ₩20,000。週末要排隊，整隻雞加糯米，蔥花請店家少放「파 조금만」。', q:'토속촌 삼계탕'},
+        {t:'13:30', tr:'walk', name:'三清洞', p:'景福宮東側石牆路往北走，咖啡店和小店多。', q:'삼청동길'},
+        {t:'14:30', tr:'walk', must:true, name:'北村韓屋村', p:'免費，居民區要安靜，週末遊客多。坡多，路面結冰要小心。', q:'북촌한옥마을'},
+        {t:'15:45', tr:'walk', name:'益善洞韓屋村 下午茶', p:'安國站往南走 15 分，或鍾路 3 街站 4、6 號出口。老韓屋改的咖啡店，挑一家坐著暖身。', q:'익선동 한옥거리'},
+        {t:'18:00', tr:'walk', must:true, name:'鍾路 3 街 烤肉巷 晚餐', p:'益善洞旁邊就是烤肉和豬皮巷，任一家約 ₩15,000 一人，純肉。路邊帳篷位冬天有暖爐。', q:'종로3가 돼지껍데기 골목'},
+        {t:'20:00', tr:'metro', must:true, name:'首爾廣場 溜冰場', p:'1 號線到市廳站。去年 12/19–2/8，一小時 ₩1,000 含冰鞋，週六開到 23:00。現場排隊拿場次，出發前查 seoulskate.kr。', q:'서울광장 스케이트장', alt:'沒開或不想溜：樂天世界塔 Seoul Sky 觀景台（週六開到 23:00，₩31,000）。'},
+        {t:'21:30', tr:'walk', name:'走回明洞', p:'市廳到明洞走 10 分。'}
+      ]
+    },
+    {
+      d:'1/10', w:'日', c:'se', k:'昌德宮 · 聖水 · 弘大',
+      title:'昌德宮 → 聖水洞 → DDP → 弘大延南',
+      note:'昌德宮週一休，只能今天去。下午聖水洞逛選物店和咖啡，傍晚 DDP，晚上弘大吃烤肉、最後一晚逛街。',
+      items:[
+        {t:'09:30', tr:'metro', must:true, book:true, name:'昌德宮 + 秘苑', p:'3 號線安國站 3 號出口。冬季 09:00–17:30，門票 ₩3,000；秘苑要跟導覽，加 ₩5,000，先在官網預約。', q:'창덕궁', alt:'不想看宮：睡飽直接去聖水。'},
+        {t:'12:00', tr:'walk', name:'午餐 · 益善洞或鍾路', p:'昌德宮出來走到益善洞或鍾路吃。'},
+        {t:'13:30', tr:'metro', must:true, name:'聖水洞 鍊武場街', p:'2 號線聖水站 3 號出口。大林倉庫一帶，選物店、服飾、咖啡，男生衣服多。4 號出口是手工鞋街。', q:'성수동 연무장길', alt:'太冷：COEX 星空圖書館（10:30–22:00，免費）＋ COEX 商場，全室內。'},
+        {t:'16:30', tr:'metro', name:'DDP 東大門設計廣場', p:'2 號線到東大門歷史文化公園站 1 號出口直達。建築免費，拍照就好，天黑後燈打起來更好看。', q:'동대문디자인플라자', alt:'沒興趣就跳過，直接去弘大。'},
+        {t:'18:30', tr:'metro', must:true, book:true, name:'弘大 烤肉 晚餐', p:'2 號線到弘大入口站 9 號出口。무쇠김치삼겹 홍대점 鐵板五花肉，先訂位。', q:'무쇠김치삼겹 홍대점', alt:'한양역 有團體座位；延南洞 연남제비 濟州黑豬頸肉（3 號出口）。'},
+        {t:'20:00', tr:'walk', name:'弘大逛街、買衣服', p:'弘大鬧區和延南小店，最後一晚把現金花掉。'},
+        {t:'21:30', tr:'metro', name:'回明洞 整理行李', p:'2 號線到乙支路入口站約 20 分。'}
+      ]
+    },
+    {
+      d:'1/11', w:'一', c:'se', k:'回台北',
+      title:'首爾 → 仁川機場 → 台北',
+      note:'20:15 的飛機，白天都有空。退房寄放行李，去廣藏市場吃、明洞最後補貨，16:00 出發去機場。CI163 回台北。',
+      items:[
+        {t:'10:00', tr:'walk', name:'退房、寄放行李', p:'飯店寄放，下午回來拿。'},
+        {t:'10:30', tr:'metro', must:true, name:'廣藏市場 早午餐', p:'1 號線鍾路 5 街站 8 號出口。綠豆煎餅、生牛肉、豬腳。攤位付現。', q:'광장시장', alt:'昌德宮週一休，今天不用考慮。'},
+        {t:'12:30', tr:'walk', name:'明洞 最後補貨', p:'藥妝、伴手禮、把剩下的韓元花掉。', q:'명동'},
+        {t:'15:30', tr:'walk', name:'回飯店拿行李'},
+        {t:'16:00', tr:'bus', must:true, name:'明洞 → 仁川機場', p:'機場巴士 6015 在明洞路邊直上，約 ₩17,000 一人，70–90 分，不用拖行李換車。', q:'명동 6015 공항버스', alt:'AREX：4 號線 2 站到首爾站轉直達車 ₩9,500，到 T2 約 51 分，要搬兩次行李。'},
+        {t:'17:30', tr:'walk', name:'報到、退 T-money', p:'華航在 T2。T-money 餘額低於 ₩20,000 可在便利商店退（手續費 ₩500）。'},
+        {t:'20:15', tr:'plane', must:true, name:'CI163 仁川 → 桃園', p:'飛 3 小時，台灣時間 22:15 到桃園。'}
+      ]
+    }
+  ];
+
+  var TODO = [
+    ['填 Quinn 的班機', '是不是跟 CI188 / CI163 同班？填到航班分頁'],
+    ['訂釜山住宿 3 晚', '1/5–1/8 四個人，海雲台海灘附近，機場巴士直達、光之祭就在旁邊', true],
+    ['訂首爾住宿 3 晚', '1/8–1/11 五個人，明洞，去宮殿、南山、燈節、首爾站都近', true],
+    ['KTX 釜山 → 首爾 四張', '1/8（五）KTX 24 09:26，₩54,400 一人，Korail+ app 開車前一個月開放', true],
+    ['藍線公園天空膠囊', '12/1 上 bluelinepark.com 搶 1/6 下午 13:30 左右，四個人一車', true],
+    ['昌德宮秘苑預約', '1/10（日）上午，官網預約', true],
+    ['晚餐訂位', '海雲台 엄용백돼지구이집、明洞 두껍삼、弘大 무쇠김치삼겹（Naver 或打電話）'],
+    ['查冬季活動日期', '海雲台光之祭、光復路燈樹、首爾燈節、首爾廣場溜冰場，今年都還沒公布'],
+    ['換現金', '台灣先換 ₩50,000–100,000 應急（台銀約 1 台幣換 38 韓元），其餘到明洞或南浦洞換'],
+    ['開海外提款', '銀行 app 開海外提款，韓國找 Global ATM，拒絕 DCC 選韓元結算'],
+    ['下載 App', 'Naver Map、Kakao Map、Kakao T（叫車，五個人要叫大型車）、Korail+。Google Maps 在韓國不能導航'],
+    ['C/F 圓孔轉接頭', '220V 兩腳圓孔，充電器免變壓'],
+    ['保暖', '首爾白天約 1°C、晚上 -6°C：發熱衣＋毛衣＋長版羽絨、圍巾帽子手套、防滑鞋；釜山約 1–7°C 風大。每人每天暖暖包 2 片'],
+    ['存點餐句子', '파 빼주세요（不要蔥）、야채 빼주세요（不要菜）、파 조금만（蔥少一點）']
+  ];
+
+  var EAT = [
+    {area:'釜山', c:'bs', items:[
+      ['밀양순대돼지국밥','豬肉湯飯 1/5','밀양순대돼지국밥 해운대'],
+      ['엄용백돼지구이집','烤豬肉 團體座 1/5','엄용백돼지구이집 해운대'],
+      ['해운대암소갈비집','烤牛排骨 偏貴','해운대암소갈비집'],
+      ['맛찬들왕소금구이','鹽烤豬肉 海雲台 西面','맛찬들왕소금구이 해운대점'],
+      ['青沙浦烤貝街','烤貝烤蝦 1/6','청사포 조개구이'],
+      ['송정3대국밥','西面湯飯街 1/6','송정3대국밥 서면'],
+      ['札嘎其市場 2 樓','烤魚 雪蟹 1/7','자갈치시장'],
+      ['씨앗호떡','堅果糖餅 1/7','BIFF 광장'],
+      ['일미밀면','南浦洞密麵','일미밀면 남포'],
+      ['고래사어묵','海雲台魚板','고래사어묵 해운대점']
+    ]},
+    {area:'首爾', c:'se', items:[
+      ['깐부치킨','明洞炸雞 1/8','깐부치킨 명동점'],
+      ['명동교자','刀削麵 湯有蔥蒜 點餃子','명동교자 본점'],
+      ['두껍삼','明洞厚切五花 1/8','두껍삼 명동직영점'],
+      ['토속촌 삼계탕','蔘雞湯 1/9','토속촌 삼계탕'],
+      ['鍾路 3 街烤肉巷','烤豬皮 1/9','종로3가 돼지껍데기 골목'],
+      ['무쇠김치삼겹','弘大鐵板五花 1/10','무쇠김치삼겹 홍대점'],
+      ['연남제비','濟州黑豬 延南','연남제비'],
+      ['광장시장','綠豆煎餅 生牛肉 1/11','광장시장']
+    ]}
+  ];
+
+  var OPTIONS = [
+    {area:'釜山', fit:'太冷或下雨', items:[
+      ['신세계 스파랜드 센텀시티','Spa Land 溫泉汗蒸幕'],['Busan X the SKY','海雲台 100 樓觀景台'],['신세계 센텀시티','世界最大百貨'],['부산박물관','釜山博物館 免費 週一休'],['국립해양박물관','國立海洋博物館 免費 週一休']
+    ]},
+    {area:'釜山 西邊', fit:'1/7 換行程', items:[
+      ['용두산공원 부산타워','龍頭山公園 釜山塔'],['흰여울문화마을','白淺灘文化村 影島'],['태종대','太宗台 海岸公園'],['전포카페거리','田浦咖啡街 西面旁']
+    ]},
+    {area:'首爾 室內', fit:'寒流或下雪', items:[
+      ['롯데월드타워 서울스카이','樂天塔觀景台 週五六到 23:00'],['별마당 도서관','COEX 星空圖書館 免費'],['국립중앙박물관','國立中央博物館 免費'],['시로암사우나 서울역','汗蒸幕 首爾站'],['롯데월드','樂天世界 室內樂園']
+    ]},
+    {area:'首爾 市區', fit:'多一個下午', items:[
+      ['남대문시장','南大門市場'],['서울숲','首爾林 散步'],['연남동 경의선숲길','延南 林道公園'],['무신사 스탠다드 홍대','Musinsa 男裝'],['압구정 로데오','狎鷗亭 選物店']
+    ]}
+  ];
+
+  var state = {day:0};
+  try { var s = JSON.parse(localStorage.getItem('krbs-view')||'{}'); if (s.day in DAYS) state.day = s.day; } catch(e){}
+  var hm = location.hash.match(/^#day([1-7])$/); if (hm) state.day = +hm[1] - 1;
+
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  var CTRY = {bs:['釜山','c-bs'], se:['首爾','c-se']};
+
+  function renderTabs(){
+    document.getElementById('daytabs').innerHTML = DAYS.map(function(d,i){
+      return '<button type="button" class="daytab" role="tab" id="tab-'+i+'" aria-selected="'+(i===state.day)+'" aria-controls="daypanel" data-i="'+i+'">'+
+        '<div class="d">'+esc(d.d)+'</div><div class="w">星期'+esc(d.w)+'</div><div class="k">'+esc(d.k)+'</div></button>';
+    }).join('');
+  }
+
+  function renderDay(){
+    var d = DAYS[state.day];
+    var html = '<div class="day-title"><div class="row"><span class="tag '+CTRY[d.c][1]+'">'+CTRY[d.c][0]+'</span><h3>'+esc(d.title)+'</h3></div><p>'+esc(d.note)+'</p></div><ol class="tl">';
+    d.items.forEach(function(it, idx){
+      if (it.split){ html += '<li class="split">'+esc(it.split)+'</li>'; return; }
+      var tr = TR[it.tr];
+      html += '<li class="ev'+(it.must?' is-must':'')+'" style="animation-delay:'+(Math.min(idx,12)*30)+'ms">'+
+        '<div class="t">'+esc(it.t)+'</div><span class="dot" aria-hidden="true"></span>'+
+        '<div class="card"><div class="tags">'+
+          (tr ? '<span class="tag '+tr[1]+'">'+tr[0]+'</span>' : '')+
+          (it.must ? '<span class="tag must">必去</span>' : '')+
+          (it.book ? '<span class="tag book">要先訂</span>' : '')+
+        '</div><h4>'+esc(it.name)+'</h4>'+
+        (it.p ? '<p>'+esc(it.p)+'</p>' : '')+
+        (it.alt ? '<p class="alt"><b>Plan B</b> '+esc(it.alt)+'</p>' : '')+
+        (it.q ? '<div class="links"><a href="'+map(it.q)+'" target="_blank" rel="noopener">在 Google Maps 打開 ↗</a></div>' : '')+
+        '</div></li>';
+    });
+    html += '</ol>';
+    document.getElementById('daypanel').innerHTML = html;
+    document.querySelectorAll('.daytab').forEach(function(b){ b.setAttribute('aria-selected', String(+b.dataset.i === state.day)); });
+    try { localStorage.setItem('krbs-view', JSON.stringify(state)); } catch(e){}
+  }
+
+  document.getElementById('daytabs').addEventListener('click', function(e){
+    var b = e.target.closest('.daytab'); if (!b) return;
+    state.day = +b.dataset.i; renderDay();
+  });
+  document.getElementById('daytabs').addEventListener('keydown', function(e){
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    state.day = (state.day + (e.key === 'ArrowRight' ? 1 : DAYS.length - 1)) % DAYS.length;
+    renderDay(); document.getElementById('tab-'+state.day).focus();
+  });
+
+  /* 待辦 */
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem('krbs-todo')||'{}') || {}; } catch(e){ done = {}; }
+  function renderTodo(){
+    document.getElementById('todolist').innerHTML = TODO.map(function(t,i){
+      return '<li><label><input type="checkbox" id="todo-'+i+'" data-i="'+i+'"'+(done[i]?' checked':'')+'><span class="tx">'+esc(t[0])+(t[2]?'<span class="tag book">要先訂</span>':'')+'<span class="sub">'+esc(t[1])+'</span></span></label></li>';
+    }).join('');
+    countTodo();
+  }
+  function countTodo(){
+    var n = TODO.filter(function(_,i){ return done[i]; }).length;
+    document.getElementById('todo-count').textContent = n + ' / ' + TODO.length + ' 完成';
+  }
+  document.getElementById('todolist').addEventListener('change', function(e){
+    var cb = e.target; if (cb.type !== 'checkbox') return;
+    done[cb.dataset.i] = cb.checked;
+    try { localStorage.setItem('krbs-todo', JSON.stringify(done)); } catch(e2){}
+    countTodo();
+  });
+  document.getElementById('todo-reset').addEventListener('click', function(){
+    done = {};
+    try { localStorage.removeItem('krbs-todo'); } catch(e){}
+    renderTodo();
+  });
+
+  /* 必吃 */
+  document.getElementById('eat-list').innerHTML = EAT.map(function(g){
+    return '<div class="eat-group"><h3><span class="tag '+CTRY[g.c][1]+'">'+esc(g.area)+'</span></h3><div class="places">'+
+      g.items.map(function(p){
+        return '<a class="place" href="'+map(p[2])+'" target="_blank" rel="noopener"><span class="area">'+esc(p[1])+'</span>'+esc(p[0])+'</a>';
+      }).join('')+'</div></div>';
+  }).join('');
+
+  /* Plan B */
+  document.getElementById('options-list').innerHTML = OPTIONS.map(function(g){
+    return '<div class="opt-group"><h3>'+esc(g.area)+'<span class="fit">'+esc(g.fit)+'</span></h3><div class="places">'+
+      g.items.map(function(p){
+        return '<a class="place" href="'+map(p[0])+'" target="_blank" rel="noopener">'+esc(p[0])+'<span class="note">'+esc(p[1])+'</span></a>';
+      }).join('')+'</div></div>';
+  }).join('');
+
+  /* 記帳：存在這支手機的 localStorage（krbs-exp、krbs-rate） */
+  var M_KEY = 'krbs-exp', R_KEY = 'krbs-rate';
+  var M_DAYS = ['出發前', '1/5', '1/6', '1/7', '1/8', '1/9', '1/10', '1/11'];
+  var M_CATS = ['餐飲', '交通', '門票', '購物', '住宿', '其他'];
+  var M_CATC = {'餐飲':'var(--orange)','交通':'var(--blue)','門票':'var(--green)','購物':'var(--gold)','住宿':'var(--red)','其他':'var(--ink-2)'};
+  var M_PM = {cash:'現金', card:'刷卡'};
+  function mLoad(k, d){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } }
+  function mSave(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+  var book = mLoad(M_KEY, null);
+  if (!book || !Array.isArray(book.items)) {
+    /* 第一次打開：先放已付的機票 */
+    book = {items:[{id:'flight', a:12743, c:'TWD', pm:'card', k:'交通', d:'出發前', t:'華航機票 CI188 / CI163', ts:1}]};
+  }
+  var rate = +mLoad(R_KEY, 38) || 38;
+  var mFilter = 'all';
+  var form = {c:'KRW', pm:'cash'};
+
+  function eur(e){ return e.c === 'TWD' ? e.a * rate : e.a; }
+  function fmt(n, dp){ return n.toLocaleString('en-US', {minimumFractionDigits:dp||0, maximumFractionDigits:dp||0}); }
+  function money(n){ return '₩' + fmt(n, 0); }
+  function msg(t){ var el = document.getElementById('m-msg'); el.textContent = t; clearTimeout(msg.t); msg.t = setTimeout(function(){ el.textContent = ''; }, 3500); }
+  function todayDay(){
+    var now = new Date(Date.now() + 9*3600000).toISOString().slice(0,10);
+    if (now < '2027-01-05') return '出發前';
+    if (now > '2027-01-11') return '1/11';
+    return '1/' + String(+now.slice(8,10));
+  }
+
+  document.getElementById('m-cat').innerHTML = M_CATS.map(function(c){ return '<option>'+c+'</option>'; }).join('');
+  document.getElementById('m-day').innerHTML = M_DAYS.map(function(d){ return '<option'+(d===todayDay()?' selected':'')+'>'+d+'</option>'; }).join('');
+  document.getElementById('m-rate').value = rate;
+
+  function renderMoney(){
+    var items = book.items.slice().sort(function(a,b){ return (M_DAYS.indexOf(b.d) - M_DAYS.indexOf(a.d)) || (b.ts - a.ts); });
+    var shown = mFilter === 'all' ? items : items.filter(function(e){ return e.d === mFilter; });
+    var tot = shown.reduce(function(s,e){ return s + eur(e); }, 0);
+    document.getElementById('m-lb').textContent = mFilter === 'all' ? '全部支出' : mFilter + ' 支出';
+    document.getElementById('m-eur').textContent = money(tot);
+    document.getElementById('m-twd').textContent = 'NT$' + fmt(tot / rate);
+
+    var chips = [['all','全部']].concat(M_DAYS.map(function(d){ return [d,d]; }));
+    document.getElementById('m-days').innerHTML = chips.map(function(c){
+      return '<button type="button" data-d="'+c[0]+'" aria-pressed="'+(mFilter===c[0])+'">'+c[1]+'</button>';
+    }).join('');
+
+    var by = {};
+    shown.forEach(function(e){ by[e.k] = (by[e.k]||0) + eur(e); });
+    var keys = Object.keys(by).sort(function(a,b){ return by[b]-by[a]; });
+    document.getElementById('m-brk-wrap').hidden = !keys.length;
+    document.getElementById('m-brk').innerHTML = keys.map(function(k){
+      var pct = tot ? by[k]/tot*100 : 0;
+      return '<div class="b"><span>'+esc(k)+'</span><span class="bar"><i style="width:'+pct.toFixed(1)+'%;background:'+(M_CATC[k]||'var(--blue)')+'"></i></span><span class="v">'+money(by[k])+' · '+Math.round(pct)+'%</span></div>';
+    }).join('');
+
+    document.getElementById('m-list').innerHTML = shown.length ? shown.map(function(e){
+      var other = e.c === 'TWD' ? 'NT$' + fmt(e.a) : 'NT$' + fmt(e.a / rate);
+      return '<li><span class="t">'+esc(e.t || e.k)+'</span>'+
+        '<span class="m">'+esc(e.d)+' · '+esc(e.k)+' · '+(M_PM[e.pm]||'')+'</span>'+
+        '<span class="a"><b>'+money(eur(e))+'</b><small>'+other+'</small></span>'+
+        '<button type="button" class="del" data-id="'+esc(e.id)+'">刪除</button></li>';
+    }).join('') : '<li class="mempty">'+(mFilter==='all'?'還沒有記帳，在上面記第一筆。':'這天還沒有記帳。')+'</li>';
+  }
+
+  document.getElementById('m-days').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    mFilter = b.dataset.d; renderMoney();
+  });
+  document.querySelectorAll('.seg').forEach(function(seg){
+    seg.addEventListener('click', function(e){
+      var b = e.target.closest('button'); if (!b) return;
+      form[seg.dataset.f] = b.dataset.v;
+      seg.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+    });
+  });
+  document.getElementById('m-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var a = parseFloat(document.getElementById('m-amt').value);
+    if (!(a > 0)) { msg('先填金額'); document.getElementById('m-amt').focus(); return; }
+    book.items.push({
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+      a: a, c: form.c, pm: form.pm,
+      k: document.getElementById('m-cat').value,
+      d: document.getElementById('m-day').value,
+      t: document.getElementById('m-note').value.trim(),
+      ts: Date.now()
+    });
+    mSave(M_KEY, book);
+    document.getElementById('m-amt').value = '';
+    document.getElementById('m-note').value = '';
+    msg('記好了'); renderMoney();
+  });
+  document.getElementById('m-list').addEventListener('click', function(e){
+    var b = e.target.closest('.del'); if (!b) return;
+    if (!b.classList.contains('armed')) {
+      b.classList.add('armed'); b.textContent = '再按一次刪除';
+      setTimeout(function(){ if (b.isConnected) { b.classList.remove('armed'); b.textContent = '刪除'; } }, 3000);
+      return;
+    }
+    var id = b.dataset.id;
+    book.items = book.items.filter(function(x){ return x.id !== id; });
+    mSave(M_KEY, book); renderMoney(); msg('刪掉了');
+  });
+  document.getElementById('m-rate').addEventListener('change', function(){
+    var v = parseFloat(this.value);
+    if (v > 0) { rate = v; mSave(R_KEY, rate); renderMoney(); msg('匯率更新了'); } else { this.value = rate; }
+  });
+
+  function copyText(text, okMsg){
+    var ta = document.getElementById('m-copy');
+    function fallback(){ ta.value = text; ta.select(); try { document.execCommand('copy'); msg(okMsg); } catch(e){ msg('沒辦法自動複製'); } }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function(){ msg(okMsg); }, fallback);
+      } else { fallback(); }
+    } catch(e){ fallback(); }
+  }
+  document.getElementById('m-tsv').addEventListener('click', function(){
+    if (!book.items.length) { msg('還沒有記帳'); return; }
+    var rows = [['日期','分類','備註','金額','幣別','韓元','台幣','付款'].join('\t')];
+    book.items.forEach(function(e){
+      rows.push([e.d, e.k, e.t, e.a, e.c, Math.round(eur(e)), Math.round(eur(e)/rate), M_PM[e.pm]||''].join('\t'));
+    });
+    copyText(rows.join('\n'), '表格複製好了，可以貼到試算表');
+  });
+  var clearBtn = document.getElementById('m-clear');
+  clearBtn.addEventListener('click', function(){
+    if (!book.items.length) { msg('本來就是空的'); return; }
+    if (!clearBtn.classList.contains('armed')) {
+      clearBtn.classList.add('armed'); clearBtn.textContent = '再按一次清空（無法復原）';
+      setTimeout(function(){ clearBtn.classList.remove('armed'); clearBtn.textContent = '清空所有記帳'; }, 3000);
+      return;
+    }
+    book.items = [];
+    mSave(M_KEY, book);
+    clearBtn.classList.remove('armed'); clearBtn.textContent = '清空所有記帳';
+    renderMoney(); msg('清空了');
+  });
+  renderMoney();
+
+  /* 倒數：1/5 07:40 桃園起飛 CI188 */
+  var target = new Date('2027-01-05T07:40:00+08:00').getTime();
+  var endTrip = new Date('2027-01-11T22:15:00+08:00').getTime();
+  function pad(n){ return (n<10?'0':'')+n; }
+  function setCd(d,h,m){ document.getElementById('cd-d').textContent = d; document.getElementById('cd-h').textContent = h; document.getElementById('cd-m').textContent = m; }
+  function tick(){
+    var now = Date.now(), diff = target - now;
+    var note = document.getElementById('cd-note');
+    if (now > endTrip){ setCd('0','00','00'); note.textContent = '旅程已結束'; return; }
+    if (diff <= 0){ setCd('0','00','00'); note.textContent = '旅程進行中'; return; }
+    setCd(Math.floor(diff/86400000), pad(Math.floor(diff%86400000/3600000)), pad(Math.floor(diff%3600000/60000)));
+    note.textContent = '距離 1/5 07:40 起飛';
+  }
+  tick(); setInterval(tick, 30000);
+
+  renderTabs(); renderDay(); renderTodo();
+})();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("sw.js").then(null, function () {});
+  });
+}
+</script></body>
+</html>
